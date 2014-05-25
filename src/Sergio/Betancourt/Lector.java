@@ -85,14 +85,34 @@ String lectura;
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+/*********************************************************************************
+ *************** Evento cuando se da click al boton de "Seleccionar **************
+ *********************** un archivo" el cual crea una clase Archivo **************
+ ************* y dependiendo del archivo que se seleccione carga su **************
+ ************* contenido y lo muestra en el area de texto ************************
+ */
     private void btnCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarActionPerformed
         Archivo archivo = new Archivo();
+        
+        //Se llama al metodo cargar, el cual tiene la funcion de seleccionar un
+        //archivo con formato .txt y se pone su contenido en la variable lectura
         lectura = archivo.cargar();
+        
+        // Se pone el area de texto en blanco, en caso de que ya halla sido 
+        // utlizado anteriormente.
         txtDocumento.setText("");
+        
+        //Se agrega el texto al area de texto 
         txtDocumento.setText(lectura);
     }//GEN-LAST:event_btnCargarActionPerformed
 
+    
+    /*****************************************************************************
+     ****************** Evento cuando se da click en el boton Evaluar ************
+     ****************** El cual toma el texto que está escrito en el  ************
+     * **************** area de texto y lo manda a la clase Evaluador ************
+     * ***************************************************************************
+     */
     private void btnEvaluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEvaluarActionPerformed
         // TODO add your handling code here:
         

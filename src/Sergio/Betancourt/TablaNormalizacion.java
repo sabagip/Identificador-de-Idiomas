@@ -6,13 +6,27 @@
 package Sergio.Betancourt;
 
 /**
- *
+ * Esta clase tiene los metodos necesarios para la normalizacion de algún valor 
+ * numerico, tales como la media aritmetica, la tabla de normalización, desviacion
+ * estandar y su respectivo valor en porcentaje.
+ * 
+ * Para la normalización se decidio crear dos arreglos que indican los valores 
+ * de la desviacion estandar del valor numerico que se desea evaluar.
  * @author SABAGIP
  */
 public class TablaNormalizacion {
 
+    /**
+     * El siguiente constructor recibe un valor numerico de tipo double, el cual
+     * es la desviacion estandar de los contadores de cada idioma.
+     * 
+     * Contiene dos arreglos, el primero contiene la desviacion estandar y el 
+     * segundo su respectivo porcentaje, esto para sacar su valor normalizado.
+     * 
+     */
     public double normalizacion(double numero) {
-
+        
+        // Declaracion de los arreglos y variables necesarias
         double datoNormalizado[] = new double[400];
         double porcentaje[] = new double[400];
         int posicionDato = 0;
@@ -820,27 +834,85 @@ public class TablaNormalizacion {
         porcentaje[398] = 50.00;
         porcentaje[399] = 50.00;
         
+       // Se redondea el valor que se manda para ser comparado en el arreglo
+        // Dato normalizado
        double redondeoNumero = redondear(numero, 2);
        
+       // En caso de que el valor redondeado sea negativo, se convierte a positivo,
+       // Esto para tomar solo los valores positivos de la curva normal.
        if(redondeoNumero < 0)
            redondeoNumero *= -1;
        
+       // El siguiente ciclo, lo que hace es buscar el numero a evaluar en el 
+       // arreglo datoNormalizado, para iniciar su normalizacion.
        for(int i = 0; i <= datoNormalizado.length - 1; i ++){
+           
+           //Si se encuentra una coincidencia en el arreglo
            if(datoNormalizado[i] == redondeoNumero){
+               
+               //guardame la posicion en la que se encuentra dicho numero
                posicionDato = i;
+               //rompe el ciclo.
                break;
            }
        }
        
+       // Se busca la posicion exacta del valor encontrado anteriormente para
+       // encontrar su porcentaje para guardarlo en la variable valor.
        valor = porcentaje[posicionDato];
+       
+       
         return  valor;
         
        
 
     }
     
+    /**
+     * El siguiente metodo funciona para redondear un numero a la cantidad de 
+     * decimales que el usuario desee.
+     */
       public double redondear( double numero, int decimales ) {
         return Math.round(numero*Math.pow(10,decimales))/Math.pow(10,decimales);
   }
+      
+      /***
+     * *******************************************************************************************************
+     * *******************************METODOS PARA SACAR LA MEDIA ARITMETICA Y *******************************
+     * *******************************LA DESVIACION ESTANDAR DE LOS CONTADORES *******************************
+     * *******************************************************************************************************
+     * *******************************************************************************************************
+    */
+
+   
+     float mediaAritmetica(int contadorEspañol, int contadorIngles, int contadorFrances) {
+        float mediaAritmetica;
+
+        mediaAritmetica = (float) (0.3333333 * (contadorEspañol + contadorFrances + contadorIngles));
+
+        return mediaAritmetica;
+    }
+
+     float desviacionEstandar(int contadorEspañol, int contadorIngles, int contadorFrances, double mediaAritmetica) {
+
+        float desviacionEstandar;
+
+        mediaAritmetica = (float) (0.5 * (contadorEspañol + contadorFrances + contadorIngles));
+
+        desviacionEstandar = (float) Math.sqrt(0.5 * (Math.pow(contadorEspañol - mediaAritmetica, 2)
+                + Math.pow(contadorIngles - mediaAritmetica, 2)
+                + Math.pow(contadorFrances - mediaAritmetica, 2)));
+
+        return desviacionEstandar;
+
+    }
+
+     double normalizacion(double mediaAritmetica, double desviacionEstandar, int contador) {
+        double datoNormalizado;
+
+        datoNormalizado = (contador - mediaAritmetica) / desviacionEstandar;
+
+        return datoNormalizado;
+    }
 
 }
